@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<programList xmlns="ProgramNameSpace">
+  <program name="createtask" public="false">
+    <description />
+    <paramSection />
+    <localSection />
+    <source>
+      <code>begin
+  //
+  //Monitoring Task
+  taskCreate "MonitorTask",100,MonitorTask()
+  return
+end
+
+      </code>
+    </source>
+  </program>
+</programList>
