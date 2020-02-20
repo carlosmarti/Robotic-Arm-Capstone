@@ -75,7 +75,6 @@ namespace Robotic_Arm
                     string dataReceived = Encoding.ASCII.GetString(buffer, 0, bytesRead);
                     Console.WriteLine("received: {0}", dataReceived);
 
-                    client = listener.AcceptTcpClient();
 
                     //write back to server
                     //Console.WriteLine("Sending data back");
