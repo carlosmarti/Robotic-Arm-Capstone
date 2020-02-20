@@ -22,7 +22,7 @@ namespace Robotic_Arm
             try
             {
                 var portNum = int.Parse(txtPort.Text);
-                TcpConnection.Init(portNum, txtPort.Text);
+                TcpConnection.Init(portNum, txtIP.Text);
             }
             catch(Exception err)
             {
@@ -33,7 +33,6 @@ namespace Robotic_Arm
 
         private void btnDisconnect_Click(object sender, EventArgs e)
         {
-            TcpConnection.Running = false;
             TcpConnection.StopServer();
         }
     }
