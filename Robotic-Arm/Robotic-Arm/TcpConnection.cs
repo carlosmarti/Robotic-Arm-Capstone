@@ -28,6 +28,7 @@ namespace Robotic_Arm
                 var ipAddress = System.Net.IPAddress.Parse(ip);
                 listener = new System.Net.Sockets.TcpListener(ipAddress, port);
                 Console.WriteLine("created Listener");
+                Start();
            
             }
             catch (Exception e)
