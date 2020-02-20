@@ -12,6 +12,7 @@ namespace Robotic_Arm
 {
     public partial class Form1 : Form
     {
+        TCPClient client;
         public Form1()
         {
             InitializeComponent();
@@ -34,6 +35,22 @@ namespace Robotic_Arm
         private void btnDisconnect_Click(object sender, EventArgs e)
         {
             TcpConnection.StopServer();
+        }
+
+        private void connectClient_Click(object sender, EventArgs e)
+        {
+            client = new TCPClient();
+        }
+
+        private void disconnectClient_Click(object sender, EventArgs e)
+        {
+            client.stopClient();
+        }
+
+        private void clientSend_Click(object sender, EventArgs e)
+        {
+            client.TextToSend = clientMSG.Text;
+            client.sendMSG();
         }
     }
 }
