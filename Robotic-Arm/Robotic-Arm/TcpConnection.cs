@@ -28,8 +28,6 @@ namespace Robotic_Arm
                 var ipAddress = System.Net.IPAddress.Parse(ip);
                 listener = new System.Net.Sockets.TcpListener(ipAddress, port);
                 Console.WriteLine("created Listener");
-
-                Start();
            
             }
             catch (Exception e)
@@ -75,8 +73,6 @@ namespace Robotic_Arm
                     string dataReceived = Encoding.ASCII.GetString(buffer, 0, bytesRead);
                     Console.WriteLine("received: {0}", dataReceived);
 
-                    client = listener.AcceptTcpClient();
-
                     //write back to server
                     //Console.WriteLine("Sending data back");
                     //netS.Write(buffer, 0, bytesRead);
@@ -97,7 +93,6 @@ namespace Robotic_Arm
 
         public static void StopServer()
         {
-            Running = false;
             listener.Stop();
             Console.WriteLine("closed server");
         }
