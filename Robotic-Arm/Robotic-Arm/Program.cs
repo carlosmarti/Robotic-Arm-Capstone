@@ -14,7 +14,6 @@ namespace Robotic_Arm
         [STAThread]
         static void Main()
         {
-            TcpConnection tcpClient = new TcpConnection();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());

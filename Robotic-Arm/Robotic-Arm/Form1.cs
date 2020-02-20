@@ -16,5 +16,25 @@ namespace Robotic_Arm
         {
             InitializeComponent();
         }
+
+        private void btnConnect_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var portNum = int.Parse(txtPort.Text);
+                TcpConnection.Init(portNum, txtPort.Text);
+            }
+            catch(Exception err)
+            {
+                Console.WriteLine(err.Message);
+            }
+            
+        }
+
+        private void btnDisconnect_Click(object sender, EventArgs e)
+        {
+            TcpConnection.Running = false;
+            TcpConnection.StopServer();
+        }
     }
 }

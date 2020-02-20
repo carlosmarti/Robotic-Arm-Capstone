@@ -18,19 +18,16 @@ namespace Robotic_Arm
         private static TcpListener listener;
         private static Thread serverThread;
 
-        public static void Init(int portNum)
+        public static void Init(int portNum, string ip)
         {
-            port = portNum;
-            //instance listener to commumicate with server
-            var ipAddress = System.Net.IPAddress.Any;
-
+            
             try
             {
+                port = portNum;
+                //instance listener to commumicate with server
+                var ipAddress = System.Net.IPAddress.Parse(ip);
                 listener = new System.Net.Sockets.TcpListener(ipAddress, port);
-
-                Console.WriteLine("Listening...");
-                //start listening for server messages
-                listener.Start();
+                Console.WriteLine("created Listener");
            
             }
             catch (Exception e)
@@ -43,7 +40,12 @@ namespace Robotic_Arm
         {
             try
             {
+                Console.WriteLine("Listening...");
+                //start listening for server messages
+                listener.Start();
+
                 serverThread = new Thread(new ThreadStart(Run));
+                running = true;
                 serverThread.Start();
             }
             catch(Exception e)
@@ -56,12 +58,12 @@ namespace Robotic_Arm
         {
             //get client tryng to send message
             var client = listener.AcceptTcpClient();
-            running = true;
 
             try
             {
                 while (running)
                 {
+                    
 
                     NetworkStream netS = client.GetStream();
 
@@ -72,8 +74,8 @@ namespace Robotic_Arm
                     Console.WriteLine("received: {0}", dataReceived);
 
                     //write back to server
-                    Console.WriteLine("Sending data back");
-                    netS.Write(buffer, 0, bytesRead);
+                    //Console.WriteLine("Sending data back");
+                    //netS.Write(buffer, 0, bytesRead);
                 }
             }
             catch(Exception e)
@@ -82,17 +84,23 @@ namespace Robotic_Arm
             }
             finally
             {
-                //close all open connections
+                //close client open connections
                 client.Close();
-                listener.Stop();
                 Console.ReadLine();
             }
             
         }
 
-        public static void Stop()
+        public static void StopServer()
         {
-            running = false;
+            listener.Stop();
+            Console.WriteLine("closed server");
+        }
+
+        public static bool Running
+        {
+            get { return running; }
+            set { running = value; }
         }
 
 
