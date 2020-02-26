@@ -51,6 +51,7 @@ namespace Robotic_Arm
         {
             client.TextToSend = clientMSG.Text;
             client.sendMSG();
+            msgBox.Items.Add(client.TextToSend);
         }
     }
 }

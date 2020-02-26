@@ -74,13 +74,9 @@ namespace Robotic_Arm
                     string dataReceived = Encoding.ASCII.GetString(buffer, 0, bytesRead);
                     Console.WriteLine("received: {0}", dataReceived);
 
-<<<<<<< HEAD
-
-=======
->>>>>>> cd6b4d333dd04e4b4b670e766c6af6501feadd01
                     //write back to server
-                    //Console.WriteLine("Sending data back");
-                    //netS.Write(buffer, 0, bytesRead);
+                    Console.WriteLine("Sending data back");
+                    netS.Write(buffer, 0, bytesRead);
                 }
             }
             catch(Exception e)

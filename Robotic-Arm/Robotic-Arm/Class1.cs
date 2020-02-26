@@ -37,9 +37,10 @@ namespace Robotic_Arm
             System.Diagnostics.Debug.WriteLine("Sending : " + textToSend);
             nwStream.Write(bytesToSend, 0, bytesToSend.Length);
             //---read back the text, predicts size recieved---
-            //byte[] bytesToRead = new byte[client.ReceiveBufferSize];
-            //int bytesRead = nwStream.Read(bytesToRead, 0, client.ReceiveBufferSize);
-            //System.Diagnostics.Debug.WriteLine("Received : " + Encoding.ASCII.GetString(bytesToRead, 0, bytesRead));
+            byte[] bytesToRead = new byte[client.ReceiveBufferSize];
+            int bytesRead = nwStream.Read(bytesToRead, 0, client.ReceiveBufferSize);
+
+            TextToSend = Encoding.ASCII.GetString(bytesToRead, 0, bytesRead);
         }
 
         public void stopClient()
