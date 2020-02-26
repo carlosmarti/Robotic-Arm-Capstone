@@ -9,18 +9,28 @@ namespace Robotic_Arm
     class TCPClient
     {
         //---Server IP and port---
-        const int PORT_NO = 81;
-        const string SERVER_IP = "10.5.196.103";
+        private int portNum;
+        private string serverIp;
         //---data to send to the server---
         string textToSend = DateTime.Now.ToString();
         //---create a TCPClient object at the IP and port no.---
         TcpClient client;
         NetworkStream nwStream;
 
-        public TCPClient()
+        public TCPClient(string ip,int pNum )
         {
-            client = new TcpClient(SERVER_IP, PORT_NO);
-            nwStream = client.GetStream();
+            try
+            {
+                serverIp = ip;
+                portNum = pNum;
+                client = new TcpClient(serverIp, portNum);
+                nwStream = client.GetStream();
+            }
+            catch( Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            
         }
         public string TextToSend
         {
@@ -31,11 +41,26 @@ namespace Robotic_Arm
 
         public void sendMSG()
         {
-            //---send the text---
-            //---Find the length of data being sent---
-            byte[] bytesToSend = ASCIIEncoding.ASCII.GetBytes(textToSend);
-            System.Diagnostics.Debug.WriteLine("Sending : " + textToSend);
-            nwStream.Write(bytesToSend, 0, bytesToSend.Length);
+            try
+            {
+                //---send the text---
+                //---Find the length of data being sent---
+                byte[] bytesToSend = ASCIIEncoding.ASCII.GetBytes(textToSend);
+                System.Diagnostics.Debug.WriteLine("Sending : " + textToSend);
+                nwStream.Write(bytesToSend, 0, bytesToSend.Length);
+
+                readMsg();
+                
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            
+        }
+
+        public void readMsg()
+        {
             //---read back the text, predicts size recieved---
             byte[] bytesToRead = new byte[client.ReceiveBufferSize];
             int bytesRead = nwStream.Read(bytesToRead, 0, client.ReceiveBufferSize);
@@ -45,8 +70,16 @@ namespace Robotic_Arm
 
         public void stopClient()
         {
-            Console.ReadLine();
-            client.Close();
+            try
+            {
+                Console.ReadLine();
+                client.Close();
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            
         }
     }
 }

@@ -87,6 +87,7 @@ namespace Robotic_Arm
             {
                 //close client open connections
                 client.Close();
+                StopServer();
                 Console.ReadLine();
             }
             

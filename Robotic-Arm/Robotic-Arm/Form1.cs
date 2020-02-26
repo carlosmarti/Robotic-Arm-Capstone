@@ -16,30 +16,31 @@ namespace Robotic_Arm
         public Form1()
         {
             InitializeComponent();
+            //TcpConnection.Init(81, "10.5.196.103"); local server 
         }
 
-        private void btnConnect_Click(object sender, EventArgs e)
+        /*private void btnConnect_Click(object sender, EventArgs e)
         {
             try
             {
                 var portNum = int.Parse(txtPort.Text);
                 TcpConnection.Init(portNum, txtIP.Text);
             }
-            catch(Exception err)
+            catch (Exception err)
             {
                 Console.WriteLine(err.Message);
             }
-            
-        }
 
-        private void btnDisconnect_Click(object sender, EventArgs e)
+        }*/
+
+        /*private void btnDisconnect_Click(object sender, EventArgs e)
         {
             TcpConnection.StopServer();
-        }
+        }*/
 
         private void connectClient_Click(object sender, EventArgs e)
         {
-            client = new TCPClient();
+            client = new TCPClient(txtIP.Text, int.Parse(txtPort.Text));
         }
 
         private void disconnectClient_Click(object sender, EventArgs e)
