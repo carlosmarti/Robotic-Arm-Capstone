@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading;
 
 namespace Robotic_Arm
 {
@@ -25,6 +26,7 @@ namespace Robotic_Arm
                 portNum = pNum;
                 client = new TcpClient(serverIp, portNum);
                 nwStream = client.GetStream();
+                Console.WriteLine("yay");
             }
             catch( Exception e)
             {
@@ -46,9 +48,8 @@ namespace Robotic_Arm
                 //---send the text---
                 //---Find the length of data being sent---
                 byte[] bytesToSend = ASCIIEncoding.ASCII.GetBytes(textToSend);
-                System.Diagnostics.Debug.WriteLine("Sending : " + textToSend);
+                System.Diagnostics.Debug.WriteLine("Sending : --" + textToSend + "--");
                 nwStream.Write(bytesToSend, 0, bytesToSend.Length);
-
                 readMsg();
                 
             }
@@ -61,11 +62,17 @@ namespace Robotic_Arm
 
         public void readMsg()
         {
-            //---read back the text, predicts size recieved---
-            byte[] bytesToRead = new byte[client.ReceiveBufferSize];
-            int bytesRead = nwStream.Read(bytesToRead, 0, client.ReceiveBufferSize);
+            for (int i = 0; i < 10; i++)
+            { //---read back the text, predicts size recieved---
+                byte[] bytesToRead = new byte[client.ReceiveBufferSize];
+                int bytesRead = nwStream.Read(bytesToRead, 0, client.ReceiveBufferSize);
+                Console.WriteLine(bytesRead);
+                TextToSend = Encoding.ASCII.GetString(bytesToRead, 0, bytesRead);
+                Console.WriteLine(textToSend);
+                Thread.Sleep(50);
+            }
 
-            TextToSend = Encoding.ASCII.GetString(bytesToRead, 0, bytesRead);
+            
         }
 
         public void stopClient()

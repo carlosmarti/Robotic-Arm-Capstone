@@ -16,6 +16,9 @@ namespace Robotic_Arm
         public Form1()
         {
             InitializeComponent();
+            txtPort.Text = "13000";
+            txtIP.Text = "192.168.0.254";
+            clientMSG.Text = "INFcommand";
             //TcpConnection.Init(81, "10.5.196.103"); local server 
         }
 
@@ -41,6 +44,8 @@ namespace Robotic_Arm
         private void connectClient_Click(object sender, EventArgs e)
         {
             client = new TCPClient(txtIP.Text, int.Parse(txtPort.Text));
+            client.TextToSend = "INFcommand";
+            client.sendMSG();
         }
 
         private void disconnectClient_Click(object sender, EventArgs e)
