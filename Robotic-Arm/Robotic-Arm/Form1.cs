@@ -41,11 +41,16 @@ namespace Robotic_Arm
             TcpConnection.StopServer();
         }*/
 
+        public ListBox getMsgBox()
+        {
+            return msgBox;
+        }
+
         private void connectClient_Click(object sender, EventArgs e)
         {
-            client = new TCPClient(txtIP.Text, int.Parse(txtPort.Text));
+            client = new TCPClient(txtIP.Text, int.Parse(txtPort.Text), this);
             client.TextToSend = "INFcommand";
-            client.sendMSG();
+            //client.sendMSG();
         }
 
         private void disconnectClient_Click(object sender, EventArgs e)
@@ -58,6 +63,11 @@ namespace Robotic_Arm
             client.TextToSend = clientMSG.Text;
             client.sendMSG();
             msgBox.Items.Add(client.TextToSend);
+        }
+
+        private void msgBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

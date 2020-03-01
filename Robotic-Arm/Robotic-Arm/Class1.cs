@@ -4,6 +4,7 @@ using System.Text;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace Robotic_Arm
 {
@@ -14,14 +15,18 @@ namespace Robotic_Arm
         private string serverIp;
         //---data to send to the server---
         string textToSend = DateTime.Now.ToString();
+        //--data received from sever--
+        string txtReceived = "?asd,jfd,irf,jgk ????";
         //---create a TCPClient object at the IP and port no.---
         TcpClient client;
         NetworkStream nwStream;
+        Form1 wForm;
 
-        public TCPClient(string ip,int pNum )
+        public TCPClient(string ip,int pNum, Form1 form1 )
         {
             try
             {
+                wForm = form1;
                 serverIp = ip;
                 portNum = pNum;
                 client = new TcpClient(serverIp, portNum);
@@ -38,6 +43,12 @@ namespace Robotic_Arm
         {
             get { return textToSend; }
             set { textToSend = value; }
+        }
+
+        public String TextReceived
+        {
+            get { return txtReceived; }
+            set { txtReceived = value; }
         }
 
 
@@ -60,19 +71,50 @@ namespace Robotic_Arm
             
         }
 
-        public void readMsg()
+        private void readMsg()
         {
-            for (int i = 0; i < 10; i++)
-            { //---read back the text, predicts size recieved---
-                byte[] bytesToRead = new byte[client.ReceiveBufferSize];
-                int bytesRead = nwStream.Read(bytesToRead, 0, client.ReceiveBufferSize);
-                Console.WriteLine(bytesRead);
-                TextToSend = Encoding.ASCII.GetString(bytesToRead, 0, bytesRead);
-                Console.WriteLine(textToSend);
-                Thread.Sleep(50);
+            try
+            {
+                for (int i = 0; i < 10; i++)
+                { //---read back the text, predicts size recieved---
+                    byte[] bytesToRead = new byte[client.ReceiveBufferSize];
+                    int bytesRead = nwStream.Read(bytesToRead, 0, client.ReceiveBufferSize);
+                    Console.WriteLine(bytesRead);
+                    TextReceived = Encoding.ASCII.GetString(bytesToRead, 0, bytesRead);
+                    Console.WriteLine(TextReceived);
+
+                    //if a message was received send it to the form
+                    if(bytesRead > 0)
+                    {
+                        cleanMsg();
+                        sendToForm();
+                    }
+                    Thread.Sleep(50);
+                }
             }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            
 
             
+        }
+
+        private void cleanMsg()
+        {
+            TextReceived = TextReceived.Replace("?", "");
+        }
+
+        private void sendToForm()
+        {
+            string[] messages = TextReceived.Split(',');
+            ListBox lstBox = wForm.getMsgBox();
+
+            foreach (var msg in messages)
+            {
+                lstBox.Items.Add(msg);
+            }
         }
 
         public void stopClient()
