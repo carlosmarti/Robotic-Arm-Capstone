@@ -38,15 +38,16 @@
             this.connectClient = new System.Windows.Forms.Button();
             this.disconnectClient = new System.Windows.Forms.Button();
             this.clientSendMsg = new System.Windows.Forms.Button();
+            this.infBox = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
             // msgBox
             // 
             this.msgBox.FormattingEnabled = true;
             this.msgBox.ItemHeight = 16;
-            this.msgBox.Location = new System.Drawing.Point(143, 27);
+            this.msgBox.Location = new System.Drawing.Point(30, 40);
             this.msgBox.Name = "msgBox";
-            this.msgBox.Size = new System.Drawing.Size(365, 164);
+            this.msgBox.Size = new System.Drawing.Size(288, 164);
             this.msgBox.TabIndex = 2;
             // 
             // txtPort
@@ -127,11 +128,21 @@
             this.clientSendMsg.UseVisualStyleBackColor = true;
             this.clientSendMsg.Click += new System.EventHandler(this.clientSend_Click);
             // 
+            // infBox
+            // 
+            this.infBox.FormattingEnabled = true;
+            this.infBox.ItemHeight = 16;
+            this.infBox.Location = new System.Drawing.Point(364, 43);
+            this.infBox.Name = "infBox";
+            this.infBox.Size = new System.Drawing.Size(292, 164);
+            this.infBox.TabIndex = 12;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.infBox);
             this.Controls.Add(this.clientSendMsg);
             this.Controls.Add(this.disconnectClient);
             this.Controls.Add(this.connectClient);
@@ -160,6 +171,7 @@
         private System.Windows.Forms.Button connectClient;
         private System.Windows.Forms.Button disconnectClient;
         private System.Windows.Forms.Button clientSendMsg;
+        private System.Windows.Forms.ListBox infBox;
     }
 }
 
