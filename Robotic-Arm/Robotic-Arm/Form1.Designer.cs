@@ -39,13 +39,15 @@
             this.disconnectClient = new System.Windows.Forms.Button();
             this.clientSendMsg = new System.Windows.Forms.Button();
             this.infBox = new System.Windows.Forms.ListBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // msgBox
             // 
             this.msgBox.FormattingEnabled = true;
             this.msgBox.ItemHeight = 16;
-            this.msgBox.Location = new System.Drawing.Point(30, 40);
+            this.msgBox.Location = new System.Drawing.Point(99, 40);
             this.msgBox.Name = "msgBox";
             this.msgBox.Size = new System.Drawing.Size(288, 164);
             this.msgBox.TabIndex = 2;
@@ -132,16 +134,36 @@
             // 
             this.infBox.FormattingEnabled = true;
             this.infBox.ItemHeight = 16;
-            this.infBox.Location = new System.Drawing.Point(364, 43);
+            this.infBox.Location = new System.Drawing.Point(460, 40);
             this.infBox.Name = "infBox";
             this.infBox.Size = new System.Drawing.Size(292, 164);
             this.infBox.TabIndex = 12;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(98, 20);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(105, 17);
+            this.label4.TabIndex = 13;
+            this.label4.Text = "Messages Sent";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(457, 20);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(135, 17);
+            this.label5.TabIndex = 14;
+            this.label5.Text = "Messages Recieved";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.infBox);
             this.Controls.Add(this.clientSendMsg);
             this.Controls.Add(this.disconnectClient);
@@ -155,6 +177,7 @@
             this.Controls.Add(this.msgBox);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -172,6 +195,8 @@
         private System.Windows.Forms.Button disconnectClient;
         private System.Windows.Forms.Button clientSendMsg;
         private System.Windows.Forms.ListBox infBox;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
     }
 }
 

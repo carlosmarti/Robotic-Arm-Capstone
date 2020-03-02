@@ -45,7 +45,7 @@ namespace Robotic_Arm
             set { textToSend = value; }
         }
 
-        public String TextReceived
+        public string TextReceived
         {
             get { return txtReceived; }
             set { txtReceived = value; }
@@ -61,6 +61,7 @@ namespace Robotic_Arm
                 byte[] bytesToSend = ASCIIEncoding.ASCII.GetBytes(textToSend);
                 System.Diagnostics.Debug.WriteLine("Sending : --" + textToSend + "--");
                 nwStream.Write(bytesToSend, 0, bytesToSend.Length);
+                
                 readMsg();
                 
             }
@@ -84,12 +85,11 @@ namespace Robotic_Arm
                     Console.WriteLine(TextReceived);
 
                     //if a message was received send it to the form
-                    if(bytesRead > 0)
-                    {
+                    if(bytesRead > 0){
                         cleanMsg();
                         sendToForm();
                     }
-                    Thread.Sleep(50);
+                Thread.Sleep(50);
                 }
             }
             catch(Exception e)
@@ -108,12 +108,14 @@ namespace Robotic_Arm
 
         private void sendToForm()
         {
+            String [] infoBox = { "", "Val3 Ver", "Arm Type", "Tuning", "Mounting", "Controller SN", "Arm SN", "Starc" };
             string[] messages = TextReceived.Split(',');
-            ListBox lstBox = wForm.getMsgBox();
-
+            ListBox lstBox = wForm.getInfBox();
+            int j = 1;
             foreach (var msg in messages)
             {
-                lstBox.Items.Add(msg);
+                lstBox.Items.Add(infoBox[j] + ": " + msg);
+                j++;
             }
         }
 
