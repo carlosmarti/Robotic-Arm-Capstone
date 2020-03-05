@@ -1,14 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<programList xmlns="ProgramNameSpace" >
-  <program name="stop" public="false" >
-    <description />
-    <paramSection/>
-    <localSection/>
-    <source>
-      <code>begin
-end
-
-      </code>
-    </source>
-  </program>
-</programList>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="stop" access="private" >
+    <Code><![CDATA[begin
+end]]></Code>
+  </Program>
+</Programs>

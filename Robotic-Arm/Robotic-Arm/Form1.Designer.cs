@@ -41,6 +41,9 @@
             this.infBox = new System.Windows.Forms.ListBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.mvToPoint1Btn = new System.Windows.Forms.Button();
+            this.mvToPoint2Btn = new System.Windows.Forms.Button();
+            this.mvToPoint3Btn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // msgBox
@@ -96,9 +99,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(361, 272);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(104, 17);
+            this.label3.Size = new System.Drawing.Size(110, 17);
             this.label3.TabIndex = 8;
-            this.label3.Text = "Client Message";
+            this.label3.Text = "Client Command";
             // 
             // connectClient
             // 
@@ -157,11 +160,44 @@
             this.label5.TabIndex = 14;
             this.label5.Text = "Messages Recieved";
             // 
+            // mvToPoint1Btn
+            // 
+            this.mvToPoint1Btn.Location = new System.Drawing.Point(660, 259);
+            this.mvToPoint1Btn.Name = "mvToPoint1Btn";
+            this.mvToPoint1Btn.Size = new System.Drawing.Size(92, 32);
+            this.mvToPoint1Btn.TabIndex = 16;
+            this.mvToPoint1Btn.Text = "Point 1";
+            this.mvToPoint1Btn.UseVisualStyleBackColor = true;
+            this.mvToPoint1Btn.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // mvToPoint2Btn
+            // 
+            this.mvToPoint2Btn.Location = new System.Drawing.Point(660, 311);
+            this.mvToPoint2Btn.Name = "mvToPoint2Btn";
+            this.mvToPoint2Btn.Size = new System.Drawing.Size(92, 28);
+            this.mvToPoint2Btn.TabIndex = 17;
+            this.mvToPoint2Btn.Text = "Point 2";
+            this.mvToPoint2Btn.UseVisualStyleBackColor = true;
+            this.mvToPoint2Btn.Click += new System.EventHandler(this.mvToPoint2Btn_Click);
+            // 
+            // mvToPoint3Btn
+            // 
+            this.mvToPoint3Btn.Location = new System.Drawing.Point(660, 362);
+            this.mvToPoint3Btn.Name = "mvToPoint3Btn";
+            this.mvToPoint3Btn.Size = new System.Drawing.Size(92, 32);
+            this.mvToPoint3Btn.TabIndex = 18;
+            this.mvToPoint3Btn.Text = "Point 3";
+            this.mvToPoint3Btn.UseVisualStyleBackColor = true;
+            this.mvToPoint3Btn.Click += new System.EventHandler(this.mvToPoint3Btn_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.mvToPoint3Btn);
+            this.Controls.Add(this.mvToPoint2Btn);
+            this.Controls.Add(this.mvToPoint1Btn);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.infBox);
@@ -197,6 +233,9 @@
         private System.Windows.Forms.ListBox infBox;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button mvToPoint1Btn;
+        private System.Windows.Forms.Button mvToPoint2Btn;
+        private System.Windows.Forms.Button mvToPoint3Btn;
     }
 }
 

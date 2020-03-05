@@ -16,8 +16,12 @@ namespace Robotic_Arm
         //---data to send to the server---
         string textToSend = DateTime.Now.ToString();
         //--data received from sever--
-        string txtReceived = "?asd,jfd,irf,jgk ????";
+        string txtReceived = "";
         //---create a TCPClient object at the IP and port no.---
+        int[] point1 = { 43, 82, 20};
+        int[] point2 = { 20, 40, 75 };
+        int[] point3 = { 65, 48, 71 };
+        int[] rot = { 0, 0, 0 };
         TcpClient client;
         NetworkStream nwStream;
         Form1 wForm;
@@ -58,6 +62,8 @@ namespace Robotic_Arm
             {
                 //---send the text---
                 //---Find the length of data being sent---
+                //byte[] bytesToSend = ASCIIEncoding.ASCII.GetBytes(textToSend);
+                string mPoint = "MOVp1";
                 byte[] bytesToSend = ASCIIEncoding.ASCII.GetBytes(textToSend);
                 System.Diagnostics.Debug.WriteLine("Sending : --" + textToSend + "--");
                 nwStream.Write(bytesToSend, 0, bytesToSend.Length);
@@ -85,7 +91,8 @@ namespace Robotic_Arm
                     Console.WriteLine(TextReceived);
 
                     //if a message was received send it to the form
-                    if(bytesRead > 0){
+                    if(bytesRead > 0)
+                    {
                         cleanMsg();
                         sendToForm();
                     }

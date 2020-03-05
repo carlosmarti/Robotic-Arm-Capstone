@@ -53,8 +53,7 @@ namespace Robotic_Arm
         private void connectClient_Click(object sender, EventArgs e)
         {
             client = new TCPClient(txtIP.Text, int.Parse(txtPort.Text), this);
-            client.TextToSend = "INFcommand";
-            msgBox.Items.Add("--" + client.TextToSend + "--");
+            client.TextToSend = clientMSG.Text;
             client.sendMSG();
         }
 
@@ -76,6 +75,21 @@ namespace Robotic_Arm
         }
 
         private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void mvToPoint2Btn_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void mvToPoint3Btn_Click(object sender, EventArgs e)
         {
 
         }
