@@ -81,17 +81,23 @@ namespace Robotic_Arm
 
         private void button2_Click(object sender, EventArgs e)
         {
-            
+            client.TextToSend = clientMSG.Text + "1";
+            client.sendMSG();
+            msgBox.Items.Add("--" + client.TextToSend + "--");
         }
 
         private void mvToPoint2Btn_Click(object sender, EventArgs e)
         {
-
+            client.TextToSend = clientMSG.Text + "2";
+            client.sendMSG();
+            msgBox.Items.Add("--" + client.TextToSend + "--");
         }
 
         private void mvToPoint3Btn_Click(object sender, EventArgs e)
         {
-
+            client.TextToSend = clientMSG.Text + "3";
+            client.sendMSG();
+            msgBox.Items.Add("--" + client.TextToSend + "--");
         }
     }
 }

@@ -63,7 +63,6 @@ namespace Robotic_Arm
                 //---send the text---
                 //---Find the length of data being sent---
                 //byte[] bytesToSend = ASCIIEncoding.ASCII.GetBytes(textToSend);
-                string mPoint = "MOVp1";
                 byte[] bytesToSend = ASCIIEncoding.ASCII.GetBytes(textToSend);
                 System.Diagnostics.Debug.WriteLine("Sending : --" + textToSend + "--");
                 nwStream.Write(bytesToSend, 0, bytesToSend.Length);
