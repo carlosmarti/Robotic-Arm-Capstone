@@ -16,9 +16,12 @@
       <Local name="l_sInfo" type="string" xsi:type="array" size="7" />
       <Local name="l_sSioServer" type="sio" xsi:type="array" size="1" />
       <Local name="l_nLineCounter" type="num" xsi:type="array" size="1" />
+      <Local name="l_bLoop" type="bool" xsi:type="array" size="1" />
     </Locals>
     <Code><![CDATA[begin
+  //Initializations
   sioLink(l_sSioServer,sioserver)
+  l_bLoop = true
   l_nSTATE = 0
   //Get Controller Info
   l_sInfo[0] = getVersion("VAL3")
@@ -38,11 +41,8 @@ cls()
   while true
     //////////////////////No connection open////////////////////////////////////
     if(l_nSTATE == 0)
-      
-      
-      
       l_nSetReturnVal = -1
-      clearBuffer(l_sSioServer)
+      //clearBuffer(l_sSioServer)
       l_nBuffInArray = 0
       delay(0)
       l_nSetReturnVal = sioGet(l_sSioServer, l_nBuffInArray)
@@ -52,7 +52,8 @@ cls()
         gotoxy(0, l_nLineCounter)
         l_nLineCounter = l_nLineCounter + 1
         l_nSTATE = 1
-      endIf    
+      //end of return value conditional
+      endIf     
       //////////////////////Connection attempt initiated//////////////////////////
     elseIf(l_nSTATE == 1)
       cls()
@@ -79,6 +80,7 @@ cls()
         l_nSetReturnVal=sioSet(l_sSioServer,l_nConcatBuffer)
         l_nSTATE = 0    
         //If the first 3 Chars are MVX, interperet point requested and move accordingly  
+        //command to move to predefined point 3
       elseIf(l_sConnType == "MV1")
         put("Move1 Command")
         gotoxy(0, l_nLineCounter)
@@ -86,7 +88,7 @@ cls()
         movej(p1, flange, mNomSpeed)
         waitEndMove()
         l_nSTATE = 0
-     
+        //command to move to predefined point 2
       elseIf (l_sConnType == "MV2")
         put("Move2 Command")
         gotoxy(0, l_nLineCounter)
@@ -94,7 +96,7 @@ cls()
         movej(p2, flange, mNomSpeed)
         waitEndMove()
         l_nSTATE = 0
-      
+        //command to move to predefined point 3
       elseIf(l_sConnType == "MV3")
         put("Move3 Command")
         gotoxy(0, l_nLineCounter)
@@ -102,9 +104,38 @@ cls()
         movej(p3, flange, mNomSpeed)
         waitEndMove()
         l_nSTATE = 0
+        
+      elseIf(l_sConnType == "LOP")
+        put("Loop command")
+        gotoxy(0, l_nLineCounter)
+        l_nLineCounter = l_nLineCounter + 1
+        l_nBuffInArray = 0
+        while (l_bLoop)
+          movej(p1, flange, mNomSpeed)
+          movej(p2, flange, mNomSpeed)
+          movej(p3, flange, mNomSpeed)
+          waitEndMove()
+          if (l_nBuffInArray > 0)
+            l_nSetReturnVal = sioGet(l_sSioServer, l_nBuffInArray)
+          endIf
+          
+          l_sCommand = "" 
+          for i = 0 to l_nSetReturnVal - 1 step 1
+            l_sCommand = l_sCommand + chr(l_nBuffInArray[i])
+          endFor 
+          if (l_sCommand == "STP")
+            l_bLoop = false
+            put("Stopping loop command")
+            gotoxy(0, l_nLineCounter)
+            l_nLineCounter = l_nLineCounter + 1
+          endIf  
+        //end of movement loop
+        endWhile
+      //end of connType conditional
       endIf
     
       delay(0)
+    //end of state conditional
     endIf
     put("State 0 Entered")
     gotoxy(0, l_nLineCounter)

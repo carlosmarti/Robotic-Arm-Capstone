@@ -17,11 +17,7 @@ namespace Robotic_Arm
         string textToSend = DateTime.Now.ToString();
         //--data received from sever--
         string txtReceived = "";
-        //---create a TCPClient object at the IP and port no.---
-        int[] point1 = { 43, 82, 20};
-        int[] point2 = { 20, 40, 75 };
-        int[] point3 = { 65, 48, 71 };
-        int[] rot = { 0, 0, 0 };
+       
         TcpClient client;
         NetworkStream nwStream;
         Form1 wForm;
@@ -67,7 +63,8 @@ namespace Robotic_Arm
                 System.Diagnostics.Debug.WriteLine("Sending : --" + textToSend + "--");
                 nwStream.Write(bytesToSend, 0, bytesToSend.Length);
                 
-                readMsg();
+                if(TextToSend.Contains("INF"))
+                    readMsg();
                 
             }
             catch(Exception e)
@@ -81,6 +78,7 @@ namespace Robotic_Arm
         {
             try
             {
+               
                 for (int i = 0; i < 10; i++)
                 { //---read back the text, predicts size recieved---
                     byte[] bytesToRead = new byte[client.ReceiveBufferSize];
@@ -102,9 +100,7 @@ namespace Robotic_Arm
             {
                 Console.WriteLine(e.Message);
             }
-            
-
-            
+       
         }
 
         private void cleanMsg()

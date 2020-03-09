@@ -18,7 +18,7 @@ namespace Robotic_Arm
             InitializeComponent();
             txtPort.Text = "13000";
             txtIP.Text = "192.168.0.254";
-            clientMSG.Text = "INFcommand";
+            clientMSG.Text = "INF";
             //TcpConnection.Init(81, "10.5.196.103"); local server 
         }
 
@@ -53,8 +53,8 @@ namespace Robotic_Arm
         private void connectClient_Click(object sender, EventArgs e)
         {
             client = new TCPClient(txtIP.Text, int.Parse(txtPort.Text), this);
-            client.TextToSend = clientMSG.Text;
-            client.sendMSG();
+            //client.TextToSend = clientMSG.Text;
+            //client.sendMSG();
         }
 
         private void disconnectClient_Click(object sender, EventArgs e)
@@ -81,21 +81,49 @@ namespace Robotic_Arm
 
         private void button2_Click(object sender, EventArgs e)
         {
-            client.TextToSend = clientMSG.Text + "1";
+            client.TextToSend = "MV1";
             client.sendMSG();
             msgBox.Items.Add("--" + client.TextToSend + "--");
         }
 
         private void mvToPoint2Btn_Click(object sender, EventArgs e)
         {
-            client.TextToSend = clientMSG.Text + "2";
+            client.TextToSend = "MV2";
             client.sendMSG();
             msgBox.Items.Add("--" + client.TextToSend + "--");
         }
 
         private void mvToPoint3Btn_Click(object sender, EventArgs e)
         {
-            client.TextToSend = clientMSG.Text + "3";
+            client.TextToSend = "MV3";
+            client.sendMSG();
+            msgBox.Items.Add("--" + client.TextToSend + "--");
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            client.TextToSend = "LOP";
+            client.sendMSG();
+            msgBox.Items.Add("--" + client.TextToSend + "--");
+        }
+
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            client.TextToSend = "STP";
+            client.sendMSG();
+            msgBox.Items.Add("--" + client.TextToSend + "--");
+        }
+
+        private void autoOp(Object sender, EventArgs e)
+        {
+            client.TextToSend = "LOP";
+            client.sendMSG();
+            msgBox.Items.Add("--" + client.TextToSend + "--");
+        }
+
+        private void manualOp(Object sender, EventArgs e)
+        {
+            client.TextToSend = "STP";
             client.sendMSG();
             msgBox.Items.Add("--" + client.TextToSend + "--");
         }
