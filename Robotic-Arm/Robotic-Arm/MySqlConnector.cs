@@ -1,3 +1,9 @@
+using MySql.Data.MySqlClient;
+using System;
+using System.Collections.Generic;
+using System.Runtime.Serialization;
+using System.Data;
+
 public class MySqlConnector
     {
         MySqlConnection connection;
@@ -33,7 +39,7 @@ public class MySqlConnector
             }
             catch (MySqlException exp)
             {
-                throw new Exception("Could not open MySQL Connection connection!", exp);
+                throw new System.Exception("Could not open MySQL Connection connection!", exp);
             }
         }
 
@@ -186,3 +192,23 @@ public class MySqlConnector
             }
         }
     }
+
+[Serializable]
+internal class NoRecordsFoundException : Exception
+{
+    public NoRecordsFoundException()
+    {
+    }
+
+    public NoRecordsFoundException(string message) : base(message)
+    {
+    }
+
+    public NoRecordsFoundException(string message, Exception innerException) : base(message, innerException)
+    {
+    }
+
+    protected NoRecordsFoundException(SerializationInfo info, StreamingContext context) : base(info, context)
+    {
+    }
+}

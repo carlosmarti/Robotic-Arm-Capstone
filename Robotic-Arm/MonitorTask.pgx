@@ -87,6 +87,9 @@ cls()
         l_nLineCounter = l_nLineCounter + 1
         movej(p1, flange, mNomSpeed)
         waitEndMove()
+        put("End of move")
+        gotoxy(0, l_nLineCounter)
+        l_nLineCounter = l_nLineCounter + 1
         l_nSTATE = 0
         //command to move to predefined point 2
       elseIf (l_sConnType == "MV2")
@@ -95,6 +98,9 @@ cls()
         l_nLineCounter = l_nLineCounter + 1
         movej(p2, flange, mNomSpeed)
         waitEndMove()
+        put("End of move")
+        gotoxy(0, l_nLineCounter)
+        l_nLineCounter = l_nLineCounter + 1
         l_nSTATE = 0
         //command to move to predefined point 3
       elseIf(l_sConnType == "MV3")
@@ -103,31 +109,41 @@ cls()
         l_nLineCounter = l_nLineCounter + 1
         movej(p3, flange, mNomSpeed)
         waitEndMove()
+        put("End of move")
+        gotoxy(0, l_nLineCounter)
+        l_nLineCounter = l_nLineCounter + 1
         l_nSTATE = 0
         
       elseIf(l_sConnType == "LOP")
         put("Loop command")
         gotoxy(0, l_nLineCounter)
         l_nLineCounter = l_nLineCounter + 1
-        l_nBuffInArray = 0
+        
         while (l_bLoop)
           movej(p1, flange, mNomSpeed)
           movej(p2, flange, mNomSpeed)
           movej(p3, flange, mNomSpeed)
           waitEndMove()
-          if (l_nBuffInArray > 0)
-            l_nSetReturnVal = sioGet(l_sSioServer, l_nBuffInArray)
-          endIf
-          
+          delay(0)
+          l_nSetReturnVal = sioGet(l_sSioServer, l_nBuffInArray)
+          delay(0)
           l_sCommand = "" 
+          put(l_sCommand)
+          gotoxy(0, l_nLineCounter)
+          l_nLineCounter = l_nLineCounter + 1
           for i = 0 to l_nSetReturnVal - 1 step 1
             l_sCommand = l_sCommand + chr(l_nBuffInArray[i])
-          endFor 
+          endFor
+          put(l_sCommand)
+          gotoxy(0, l_nLineCounter)
+          l_nLineCounter = l_nLineCounter + 1
+          
           if (l_sCommand == "STP")
             l_bLoop = false
             put("Stopping loop command")
             gotoxy(0, l_nLineCounter)
             l_nLineCounter = l_nLineCounter + 1
+            l_nSTATE = 0
           endIf  
         //end of movement loop
         endWhile

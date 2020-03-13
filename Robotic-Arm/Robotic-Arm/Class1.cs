@@ -14,9 +14,11 @@ namespace Robotic_Arm
         private int portNum;
         private string serverIp;
         //---data to send to the server---
-        string textToSend = DateTime.Now.ToString();
+        static string textToSend = DateTime.Now.ToString();
         //--data received from sever--
         string txtReceived = "";
+
+        Thread armLoop;
        
         TcpClient client;
         NetworkStream nwStream;
@@ -65,6 +67,12 @@ namespace Robotic_Arm
                 
                 if(TextToSend.Contains("INF"))
                     readMsg();
+
+                if (TextToSend.Contains("LOP"))
+                {
+                    armLoop = new Thread(new ThreadStart(this.autoLoop));
+                    armLoop.Start();
+                }
                 
             }
             catch(Exception e)
@@ -101,6 +109,21 @@ namespace Robotic_Arm
                 Console.WriteLine(e.Message);
             }
        
+        }
+
+        private void autoLoop()
+        {
+            while(!TextToSend.Contains("STP"))
+            {
+                byte[] bytesToSend = ASCIIEncoding.ASCII.GetBytes(textToSend);
+                System.Diagnostics.Debug.WriteLine("Sending : --" + textToSend + "--");
+                nwStream.Write(bytesToSend, 0, bytesToSend.Length);
+                Thread.Sleep(5000);
+            }
+
+            byte[] bytesToS = ASCIIEncoding.ASCII.GetBytes(textToSend);
+            System.Diagnostics.Debug.WriteLine("Sending : --" + textToSend + "--");
+            nwStream.Write(bytesToS, 0, bytesToS.Length);
         }
 
         private void cleanMsg()

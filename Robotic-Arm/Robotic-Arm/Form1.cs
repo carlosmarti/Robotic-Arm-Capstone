@@ -13,6 +13,7 @@ namespace Robotic_Arm
     public partial class Form1 : Form
     {
         TCPClient client;
+        MySqlConnector connector;
         public Form1()
         {
             InitializeComponent();
@@ -110,8 +111,8 @@ namespace Robotic_Arm
         private void button2_Click_1(object sender, EventArgs e)
         {
             client.TextToSend = "STP";
-            client.sendMSG();
-            msgBox.Items.Add("--" + client.TextToSend + "--");
+            //client.sendMSG();
+            //msgBox.Items.Add("--" + client.TextToSend + "--");
         }
 
         private void autoOp(Object sender, EventArgs e)
@@ -124,8 +125,24 @@ namespace Robotic_Arm
         private void manualOp(Object sender, EventArgs e)
         {
             client.TextToSend = "STP";
-            client.sendMSG();
-            msgBox.Items.Add("--" + client.TextToSend + "--");
+            //client.sendMSG();
+            //msgBox.Items.Add("--" + client.TextToSend + "--");
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                connector = new MySqlConnector("127.0.0.1", "robottesting", "root", "RoboticArm");
+                Console.WriteLine("Success");
+
+                connector.Insert("INSERT into endurancetesting (testno, moveno, time) values(1, 3, 3.5)");
+            }
+            catch(Exception er)
+            {
+                Console.WriteLine(er.Message);
+            }
+            
         }
     }
 }
