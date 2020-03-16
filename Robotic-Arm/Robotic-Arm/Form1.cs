@@ -129,20 +129,17 @@ namespace Robotic_Arm
             //msgBox.Items.Add("--" + client.TextToSend + "--");
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void connectdatabase_Click(object sender, EventArgs e)
         {
             try
             {
-                connector = new MySqlConnector("127.0.0.1", "robottesting", "root", "RoboticArm");
-                Console.WriteLine("Success");
-
-                connector.Insert("INSERT into endurancetesting (testno, moveno, time) values(1, 3, 3.5)");
+                connector = new MySqlConnector("127.0.0.1", "endurancetesting", "root", "");
             }
             catch(Exception er)
             {
                 Console.WriteLine(er.Message);
             }
-            
+
         }
     }
 }

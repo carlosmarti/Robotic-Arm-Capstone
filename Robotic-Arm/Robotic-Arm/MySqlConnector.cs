@@ -97,7 +97,7 @@ public class MySqlConnector
                     }
                     retVal.Rows.Add(row.ToArray());
                 } while (dataReader.Read());
-
+                   
                 dataReader.Close();
                 CloseConnection();
                 return retVal;
