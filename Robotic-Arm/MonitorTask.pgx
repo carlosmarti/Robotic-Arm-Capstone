@@ -17,11 +17,16 @@
       <Local name="l_sSioServer" type="sio" xsi:type="array" size="1" />
       <Local name="l_nLineCounter" type="num" xsi:type="array" size="1" />
       <Local name="l_bLoop" type="bool" xsi:type="array" size="1" />
+      <Local name="l_nCycleNum" type="num" xsi:type="array" size="1" />
+      <Local name="l_sTimeStampOut" type="string" xsi:type="array" size="1" />
+      <Local name="j" type="num" xsi:type="array" size="1" />
+      <Local name="l_nConcatBuffT" type="num" xsi:type="array" size="30" />
     </Locals>
     <Code><![CDATA[begin
   //Initializations
   sioLink(l_sSioServer,sioserver)
   l_bLoop = true
+  l_nCycleNum = 0
   l_nSTATE = 0
   //Get Controller Info
   l_sInfo[0] = getVersion("VAL3")
@@ -34,15 +39,15 @@
   l_sSendString ="I4," + l_sInfo[0] + "," + l_sInfo[1] + "," + l_sInfo[2] + "," + l_sInfo[3] + "," + l_sInfo[4] + "," + l_sInfo[5] + "," + l_sInfo[6]
   l_nStringLen = len(l_sSendString)
   for i = 0 to l_nStringLen - 1 step 1
-  l_nConcatBuffer[i] = asc(l_sSendString, i)
-  endFor 
-cls()
-      l_nLineCounter = 0
+    l_nConcatBuffer[i] = asc(l_sSendString, i)
+  endFor
+  cls()
+  l_nLineCounter = 0
   while true
     //////////////////////No connection open////////////////////////////////////
     if(l_nSTATE == 0)
       l_nSetReturnVal = -1
-      //clearBuffer(l_sSioServer)
+      
       l_nBuffInArray = 0
       delay(0)
       l_nSetReturnVal = sioGet(l_sSioServer, l_nBuffInArray)
@@ -145,9 +150,124 @@ cls()
             l_nLineCounter = l_nLineCounter + 1
             l_nSTATE = 0
           endIf  
-        //end of movement loop
+          //end of movement loop
         endWhile
-      //end of connType conditional
+        
+      elseIf (l_sConnType == "LP1")
+        for i = 0 to 29 step 1
+          l_nConcatBuffT[i] = 0
+        endFor
+        put("Recorded loop command 1")
+        gotoxy(0, l_nLineCounter)
+        l_nLineCounter = l_nLineCounter + 1
+        delay(0)
+        l_nCycleNum = sioGet(l_sSioServer, l_nBuffInArray)
+        delay(0)
+        for i = 0 to l_nCycleNum step 1
+          l_sTimeStampOut = getDate("%H:%M:%S")
+          l_nStringLen = len(l_sTimeStampOut)
+          for j = 0 to l_nStringLen - 1 step 1
+            l_nConcatBuffT[j] = asc(l_sTimeStampOut, j)
+          endFor 
+          l_nSetReturnVal = sioSet(l_sSioServer, l_nConcatBuffT)
+          movej(p1, flange, mNomSpeed)
+          movej(p2, flange, mNomSpeed)
+          movej(p3, flange, mNomSpeed)
+          waitEndMove()
+          l_sTimeStampOut = getDate("%H:%M:%S")
+          l_nStringLen = len(l_sTimeStampOut)
+          for j = 0 to l_nStringLen - 1 step 1
+            l_nConcatBuffT[j] = asc(l_sTimeStampOut, j)
+          endFor 
+          l_nSetReturnVal = sioSet(l_sSioServer, l_nConcatBuffT)
+        endFor
+        put("All Cycles Complete")
+        gotoxy(0, l_nLineCounter)
+        l_nLineCounter = l_nLineCounter + 1
+        l_nSTATE = 0
+        
+      elseIf (l_sConnType == "LP2")
+        for i = 0 to 29 step 1
+          l_nConcatBuffT[i] = 0
+        endFor
+        put("Recorded loop command 2")
+        gotoxy(0, l_nLineCounter)
+        l_nLineCounter = l_nLineCounter + 1
+        delay(0)
+        l_nCycleNum = sioGet(l_sSioServer, l_nBuffInArray)
+        delay(0)
+        for i = 0 to l_nCycleNum step 1
+          l_sTimeStampOut = getDate("%H:%M:%S")
+          l_nStringLen = len(l_sTimeStampOut)
+          for j = 0 to l_nStringLen - 1 step 1
+            l_nConcatBuffT[j] = asc(l_sTimeStampOut, j)
+          endFor 
+          l_nSetReturnVal = sioSet(l_sSioServer, l_nConcatBuffT)
+          movej(p5, flange, mNomSpeed)
+          movej(p4, flange, mNomSpeed)
+          movej(p3, flange, mNomSpeed)
+          movej(p2, flange, mNomSpeed)
+          movej(p1, flange, mNomSpeed)
+          waitEndMove()
+          l_sTimeStampOut = getDate("%H:%M:%S")
+          l_nStringLen = len(l_sTimeStampOut)
+          for j = 0 to l_nStringLen - 1 step 1
+            l_nConcatBuffT[j] = asc(l_sTimeStampOut, j)
+          endFor 
+          l_nSetReturnVal = sioSet(l_sSioServer, l_nConcatBuffT)
+        endFor
+        put("All Cycles Complete")
+        gotoxy(0, l_nLineCounter)
+        l_nLineCounter = l_nLineCounter + 1
+        l_nSTATE = 0
+        
+      elseIf (l_sConnType == "LP3")
+        for i = 0 to 29 step 1
+          l_nConcatBuffT[i] = 0
+        endFor
+        put("Recorded loop command 3")
+        gotoxy(0, l_nLineCounter)
+        l_nLineCounter = l_nLineCounter + 1
+        delay(0)
+        l_nCycleNum = sioGet(l_sSioServer, l_nBuffInArray)
+        delay(0)
+        for i = 0 to l_nCycleNum step 1
+          l_sTimeStampOut = getDate("%H:%M:%S")
+          l_nStringLen = len(l_sTimeStampOut)
+          for j = 0 to l_nStringLen - 1 step 1
+            l_nConcatBuffT[j] = asc(l_sTimeStampOut, j)
+          endFor 
+          l_nSetReturnVal = sioSet(l_sSioServer, l_nConcatBuffT)
+          movej(p1, flange, mNomSpeed)
+          movej(p2, flange, mNomSpeed)
+          movej(p3, flange, mNomSpeed)
+          movej(p4, flange, mNomSpeed)
+          movej(p5, flange, mNomSpeed)
+          movej(p4, flange, mNomSpeed)
+          movej(p3, flange, mNomSpeed)
+          movej(p2, flange, mNomSpeed)
+          movej(p1, flange, mNomSpeed)
+          waitEndMove()
+          l_sTimeStampOut = getDate("%H:%M:%S")
+          l_nStringLen = len(l_sTimeStampOut)
+          for j = 0 to l_nStringLen - 1 step 1
+            l_nConcatBuffT[j] = asc(l_sTimeStampOut, j)
+          endFor 
+          l_nSetReturnVal = sioSet(l_sSioServer, l_nConcatBuffT)
+        endFor
+        put("All Cycles Complete")
+        gotoxy(0, l_nLineCounter)
+        l_nLineCounter = l_nLineCounter + 1
+        l_nSTATE = 0
+        
+      //Default case if the command is invalid
+      else
+        put("Unrecognizable Command")
+        gotoxy(0, l_nLineCounter)
+        l_nLineCounter = l_nLineCounter + 1
+        l_nSTATE = 0
+        
+        //end of connType conditional
       endIf
     
       delay(0)

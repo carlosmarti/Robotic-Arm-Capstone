@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -20,6 +21,7 @@ namespace Robotic_Arm
             txtPort.Text = "13000";
             txtIP.Text = "192.168.0.254";
             clientMSG.Text = "INF";
+            numCycles.Text = "2";
             //TcpConnection.Init(81, "10.5.196.103"); local server 
         }
 
@@ -133,7 +135,7 @@ namespace Robotic_Arm
         {
             try
             {
-                connector = new MySqlConnector("127.0.0.1", "endurancetesting", "root", "");
+                connector = new MySqlConnector("127.0.0.1", "robottesting", "root", "");
             }
             catch(Exception er)
             {
@@ -141,5 +143,48 @@ namespace Robotic_Arm
             }
 
         }
+
+        private void runpath_Click(object sender, EventArgs e)
+        {
+            bool p1Enabled = path1.Checked;
+            bool p2Enabled = path2.Checked;
+            bool p3Enabled = path3.Checked;
+            int nCycles = int.Parse(numCycles.Text);
+
+            if(p1Enabled)
+            {
+                client.TextToSend = "LP1";
+                client.sendMSG();
+                client.TextToSend = numCycles.Text;
+                client.sendMSG();
+                Thread.Sleep(10);
+                client.Loop = int.Parse(numCycles.Text);
+                client.readMsg(connector);
+            }
+
+            if (p2Enabled)
+            {
+                client.TextToSend = "LP2";
+                client.sendMSG();
+                client.TextToSend = numCycles.Text;
+                client.sendMSG();
+                Thread.Sleep(10);
+                client.Loop = int.Parse(numCycles.Text);
+                client.readMsg(connector);
+            }
+
+            if (p3Enabled)
+            {
+                client.TextToSend = "LP3";
+                client.sendMSG();
+                client.TextToSend = numCycles.Text;
+                client.sendMSG();
+                Thread.Sleep(10);
+                client.Loop = int.Parse(numCycles.Text);
+                client.readMsg(connector);
+            }
+        }
     }
+
+
 }

@@ -52,9 +52,11 @@
             this.numCycles = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
+            this.path1 = new System.Windows.Forms.CheckBox();
+            this.path2 = new System.Windows.Forms.CheckBox();
+            this.path3 = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // msgBox
@@ -274,18 +276,6 @@
             this.label9.TabIndex = 26;
             this.label9.Text = "Paths:";
             // 
-            // checkedListBox1
-            // 
-            this.checkedListBox1.FormattingEnabled = true;
-            this.checkedListBox1.Items.AddRange(new object[] {
-            "Point 1 -> Point 3 -> Point 2",
-            "Point 3 -> Point 2 -> Point 1",
-            "Point 2 -> Point 1 -> Point 3"});
-            this.checkedListBox1.Location = new System.Drawing.Point(797, 47);
-            this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(241, 157);
-            this.checkedListBox1.TabIndex = 27;
-            // 
             // button4
             // 
             this.button4.Location = new System.Drawing.Point(1044, 82);
@@ -294,6 +284,7 @@
             this.button4.TabIndex = 28;
             this.button4.Text = "Run Path";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.runpath_Click);
             // 
             // button5
             // 
@@ -304,14 +295,46 @@
             this.button5.Text = "Record";
             this.button5.UseVisualStyleBackColor = true;
             // 
+            // path1
+            // 
+            this.path1.AutoSize = true;
+            this.path1.Location = new System.Drawing.Point(815, 82);
+            this.path1.Name = "path1";
+            this.path1.Size = new System.Drawing.Size(67, 21);
+            this.path1.TabIndex = 30;
+            this.path1.Text = "Path1";
+            this.path1.UseVisualStyleBackColor = true;
+            // 
+            // path2
+            // 
+            this.path2.AutoSize = true;
+            this.path2.Location = new System.Drawing.Point(815, 109);
+            this.path2.Name = "path2";
+            this.path2.Size = new System.Drawing.Size(67, 21);
+            this.path2.TabIndex = 31;
+            this.path2.Text = "Path2";
+            this.path2.UseVisualStyleBackColor = true;
+            // 
+            // path3
+            // 
+            this.path3.AutoSize = true;
+            this.path3.Location = new System.Drawing.Point(815, 136);
+            this.path3.Name = "path3";
+            this.path3.Size = new System.Drawing.Size(67, 21);
+            this.path3.TabIndex = 32;
+            this.path3.Text = "Path3";
+            this.path3.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1154, 450);
+            this.Controls.Add(this.path3);
+            this.Controls.Add(this.path2);
+            this.Controls.Add(this.path1);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
-            this.Controls.Add(this.checkedListBox1);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.numCycles);
@@ -369,9 +392,11 @@
         private System.Windows.Forms.TextBox numCycles;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.CheckedListBox checkedListBox1;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.CheckBox path1;
+        private System.Windows.Forms.CheckBox path2;
+        private System.Windows.Forms.CheckBox path3;
     }
 }
 
