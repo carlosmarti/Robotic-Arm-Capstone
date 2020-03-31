@@ -1,5 +1,5 @@
 <?php
-
+    require 'path/'
     $host = "localhost";
     $userName = "root";
     $pass = "";
@@ -10,7 +10,7 @@
     if(!$con)
         die('Could not connect: '. mysqli_error($con));
     else
-        echo "Connected!";
+        echo("<script> console.log('Conected'); </script>");
 
     mysqli_select_db($con, "endurancetesting");
 
