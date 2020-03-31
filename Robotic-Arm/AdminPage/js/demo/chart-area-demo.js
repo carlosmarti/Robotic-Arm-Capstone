@@ -33,18 +33,15 @@ var robotData = function(){
   var xmlhttp = new XMLHttpRequest();
 
   console.log("opening php file");
-  xmlhttp.open("GET", "../../php/getData.php");
+  xmlhttp.open("GET", "../../php/getData.php", true);
   //check if connection happend
   xmlhttp.onreadystatechange = function()
   {
-    if(this.status === 0 || (this.status === 200 && this.readyState === 4))
+    if(this.status === 0 || (this.status >= 200 && this.status <= 400))
     {
       console.log(xmlhttp.responseText);
     }
-    else
-    {
-      console.log("No connection!");
-    }
+    
   }
 
   xmlhttp.send();
