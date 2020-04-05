@@ -28,23 +28,37 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 }
 
 //connect to database
-var robotData = function(){
+function showData(str)
+{
 
-  var xmlhttp = new XMLHttpRequest();
-
-  console.log("opening php file");
-  xmlhttp.open("GET", "../../php/getData.php", true);
-  //check if connection happend
-  xmlhttp.onreadystatechange = function()
+  if(str != "")
   {
-    if(this.status === 0 || (this.status >= 200 && this.status <= 400))
+    var xmlhttp = new XMLHttpRequest();
+
+    console.log("opening php file to get data on: " + str);
+    xmlhttp.open("GET", "../../php/getData.php?a="+str, false);
+
+    //check if connection happend
+    xmlhttp.onreadystatechange = function()
     {
-      console.log(xmlhttp.responseText);
+      if((this.status >= 200 && this.status <= 400))
+      {
+        var obj = JSON.parse(xmlhttp.responseText);
+
+        console.log("received data: Test:" + obj['TestNo']);
+        console.log("received data: CycleNo:" + obj['CycleNo']);
+        console.log("received data: Time:" + obj['Time']);
+      }
+      
     }
+
+    xmlhttp.send();
+
+    //add code here to show data on chart
+
     
   }
-
-  xmlhttp.send();
+  
 }
 
 // Area Chart Example
@@ -66,7 +80,7 @@ var myLineChart = new Chart(ctx, {
       pointHoverBorderColor: "rgba(78, 115, 223, 1)",
       pointHitRadius: 10,
       pointBorderWidth: 2,
-      data: [robotData()/* 0, 10000, 5000, 15000, 10000, 20000, 15000, 25000, 20000, 30000, 25000, 40000 */],
+      data: [/* 0, 10000, 5000, 15000, 10000, 20000, 15000, 25000, 20000, 30000, 25000, 40000 */],
     }],
   },
   options: {
