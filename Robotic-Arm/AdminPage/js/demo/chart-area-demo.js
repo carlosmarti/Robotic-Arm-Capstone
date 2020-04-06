@@ -34,28 +34,39 @@ function showData(str)
   if(str != "")
   {
     var xmlhttp = new XMLHttpRequest();
-
+    var timeData = new Array();
     console.log("opening php file to get data on: " + str);
     xmlhttp.open("GET", "../../php/getData.php?a="+str, false);
 
     //check if connection happend
     xmlhttp.onreadystatechange = function()
     {
+		
       if((this.status >= 200 && this.status <= 400))
       {
         var obj = JSON.parse(xmlhttp.responseText);
 
-        console.log("received data: Test:" + obj['TestNo']);
-        console.log("received data: CycleNo:" + obj['CycleNo']);
-        console.log("received data: Time:" + obj['Time']);
+        console.log("received data: Test:" + obj['testNo']);
+        console.log("received data: CycleNo:" + obj['cycleNo']);
+        console.log("received data: Time:" + obj['time']);
+		timeData[0] = obj['time'].toString();
+		timeData = timeData[0].split(",");
+		for(var i = 0; i < timeData.length; i++){
+			timeData[i] = parseInt(timeData[i]);
+		}
+		console.log(timeData);
+		
       }
+	  else{
+		  console.log("Not connected!!")
+	  }
       
     }
 
     xmlhttp.send();
 
     //add code here to show data on chart
-
+    return timeData;
     
   }
   
@@ -63,12 +74,13 @@ function showData(str)
 
 // Area Chart Example
 var ctx = document.getElementById("myAreaChart");
+console.log(showData(3));
 var myLineChart = new Chart(ctx, {
   type: 'line',
   data: {
-    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    labels: ["Cycle 1", "Cycle 2", "Cycle 3", "Cycle 4", "Cycle 5", "Cycle 6"],
     datasets: [{
-      label: "Earnings",
+      label: "Times",
       lineTension: 0.3,
       backgroundColor: "rgba(78, 115, 223, 0.05)",
       borderColor: "rgba(78, 115, 223, 1)",
@@ -80,7 +92,7 @@ var myLineChart = new Chart(ctx, {
       pointHoverBorderColor: "rgba(78, 115, 223, 1)",
       pointHitRadius: 10,
       pointBorderWidth: 2,
-      data: [/* 0, 10000, 5000, 15000, 10000, 20000, 15000, 25000, 20000, 30000, 25000, 40000 */],
+      data: showData(3),/*showData(3) 0, 10000, 5000, 15000, 10000, 20000, 15000, 25000, 20000, 30000, 25000, 40000 */
     }],
   },
   options: {
@@ -96,23 +108,23 @@ var myLineChart = new Chart(ctx, {
     scales: {
       xAxes: [{
         time: {
-          unit: 'date'
+          unit: 'Seconds'
         },
         gridLines: {
           display: false,
           drawBorder: false
         },
         ticks: {
-          maxTicksLimit: 7
+          maxTicksLimit: 10
         }
       }],
       yAxes: [{
         ticks: {
-          maxTicksLimit: 5,
+		  beginAtZero: true,
+          maxTicksLimit: 10,
           padding: 10,
-          // Include a dollar sign in the ticks
           callback: function(value, index, values) {
-            return '$' + number_format(value);
+            return number_format(value);
           }
         },
         gridLines: {
@@ -144,7 +156,7 @@ var myLineChart = new Chart(ctx, {
       callbacks: {
         label: function(tooltipItem, chart) {
           var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-          return datasetLabel + ': $' + number_format(tooltipItem.yLabel);
+          return datasetLabel + number_format(tooltipItem.yLabel);
         }
       }
     }
