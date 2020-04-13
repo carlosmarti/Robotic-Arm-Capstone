@@ -34,7 +34,7 @@ function showData(str)
   if(str != "")
   {
     var xmlhttp = new XMLHttpRequest();
-
+    var timeData = new Array();
     console.log("opening php file to get data on: " + str);
     xmlhttp.open("GET", "../../php/getData.php?a="+str, false);
 
@@ -45,9 +45,18 @@ function showData(str)
       {
         var obj = JSON.parse(xmlhttp.responseText);
 
-        console.log("received data: Test:" + obj['TestNo']);
-        console.log("received data: CycleNo:" + obj['CycleNo']);
-        console.log("received data: Time:" + obj['Time']);
+        console.log("received data: Test:" + obj['testNo']);
+        console.log("received data: CycleNo:" + obj['cycleNo']);
+        console.log("received data: Time:" + obj['time']);
+
+        timeData[0] = obj['testNo'].toString();
+        timeData[1] = obj['cycleNo'].toString();
+        timeData[2] = obj['time'].toString();
+        var timeData0 = timeData[0].split(",");
+        var timeData1 = timeData[1].split(",");
+        var timeData2 = timeData[2].split(",");
+        timeData = timeData0.concat(timeData1, timeData2);
+        console.log(timeData);
       }
       
     }
@@ -56,13 +65,15 @@ function showData(str)
 
     //add code here to show data on chart
 
-    
+    return timeData;
   }
   
 }
 
 // Area Chart Example
 var ctx = document.getElementById("myAreaChart");
+var lineData = showData("2");
+console.log(lineData);
 var myLineChart = new Chart(ctx, {
   type: 'line',
   data: {
@@ -80,7 +91,7 @@ var myLineChart = new Chart(ctx, {
       pointHoverBorderColor: "rgba(78, 115, 223, 1)",
       pointHitRadius: 10,
       pointBorderWidth: 2,
-      data: [/* 0, 10000, 5000, 15000, 10000, 20000, 15000, 25000, 20000, 30000, 25000, 40000 */],
+      data: lineData,
     }],
   },
   options: {
