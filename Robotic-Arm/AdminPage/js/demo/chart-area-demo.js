@@ -87,33 +87,41 @@ function showData(str)
 var ctx = document.getElementById("myAreaChart");
 
 console.log(showData("0"));
-
-
 var lineData = showData("3");
 console.log(lineData);
 
+//determining number of lines to draw by dividing the time data by 6 - or by the number of cycles per test
+
+var numLines = lineData.length / 6;
+lineChartData = {};
+lineChartData.labels = ["Cycle 1", "Cycle 2", "Cycle 3", "Cycle 4", "Cycle 5", "Cycle 6"];
+lineChartData.datasets = [];
+lineChartData.datasets.label = "Times"
+
+for (i = 0; i < numLines; i++){
+	
+	y = [];
+	lineChartData.datasets.push({});
+	dataset = lineChartData.datasets[i];
+	dataset.fillColor = "rgba(0, 0, 0, 0)";
+	dataset.strokeColor = "rgba(102, 92, 35, 1)";
+	dataset.data = lineData.slice(0 + (6 * i), 5 + (6 * i));
+	
+	for (j = 0; j < 6; j++){
+		y.push(dataset.data[j]);
+		
+		
+	}
+	
+	lineChartData.datasets[i].data = y;
+}
+
+
+
 var myLineChart = new Chart(ctx, {
   type: 'line',
-  data: {
-    labels: ["Cycle 1", "Cycle 2", "Cycle 3", "Cycle 4", "Cycle 5", "Cycle 6"],
-    datasets: [{
-      label: "Times",
-      lineTension: 0.3,
-      backgroundColor: "rgba(78, 115, 223, 0.05)",
-      borderColor: "rgba(78, 115, 223, 1)",
-      pointRadius: 3,
-      pointBackgroundColor: "rgba(78, 115, 223, 1)",
-      pointBorderColor: "rgba(78, 115, 223, 1)",
-      pointHoverRadius: 3,
-      pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
-      pointHoverBorderColor: "rgba(78, 115, 223, 1)",
-      pointHitRadius: 10,
-      pointBorderWidth: 2,
-
-      data: lineData,
-
-    }],
-  },
+  data:lineChartData,
+  
   options: {
     maintainAspectRatio: false,
     layout: {
