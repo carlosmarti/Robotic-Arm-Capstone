@@ -49,13 +49,19 @@ function showData(str)
         console.log("received data: Test:" + obj['testNo']);
         console.log("received data: CycleNo:" + obj['cycleNo']);
         console.log("received data: Time:" + obj['time']);
-		timeData[0] = obj['time'].toString();
-		timeData = timeData[0].split(",");
-		for(var i = 0; i < timeData.length; i++){
-			timeData[i] = parseInt(timeData[i]);
-		}
-		console.log(timeData);
 		
+        timeData[0] = obj['testNo'].toString();
+        timeData[1] = obj['cycleNo'].toString();
+        timeData[2] = obj['time'].toString();
+        var timeData0 = timeData[0].split(",");
+        var timeData1 = timeData[1].split(",");
+        var timeData2 = timeData[2].split(",");
+        timeData = timeData0.concat(timeData1, timeData2);
+		//removes any empty elements when grabbing selective data
+		timeData = timeData.filter(function(obj) {return obj});
+		
+        console.log(timeData);
+
       }
 	  else{
 		  console.log("Not connected!!")
@@ -66,15 +72,26 @@ function showData(str)
     xmlhttp.send();
 
     //add code here to show data on chart
+
     return timeData;
     
+
+
+    return timeData;
+
   }
   
 }
 
 // Area Chart Example
 var ctx = document.getElementById("myAreaChart");
-console.log(showData(3));
+
+console.log(showData("0"));
+
+
+var lineData = showData("3");
+console.log(lineData);
+
 var myLineChart = new Chart(ctx, {
   type: 'line',
   data: {
@@ -92,7 +109,9 @@ var myLineChart = new Chart(ctx, {
       pointHoverBorderColor: "rgba(78, 115, 223, 1)",
       pointHitRadius: 10,
       pointBorderWidth: 2,
-      data: showData(3),/*showData(3) 0, 10000, 5000, 15000, 10000, 20000, 15000, 25000, 20000, 30000, 25000, 40000 */
+
+      data: lineData,
+
     }],
   },
   options: {
