@@ -48,9 +48,9 @@
                 
         }
         
-        $array['TestNo'] = $testNoArr;
-        $array['CycleNo'] = $cycleNoArr;
-        $array['Time'] = $timeArr;
+        $array['testNo'] = $testNoArr;
+        $array['cycleNo'] = $cycleNoArr;
+        $array['time'] = $timeArr;
 
         $result->free_result();
     }

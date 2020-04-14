@@ -1,0 +1,9 @@
+C:\Users\SkinJacket\Robotic-Arm-Capstone\Robotic-Arm\Robotic-Arm\bin\Debug\Robotic-Arm.exe.config
+C:\Users\SkinJacket\Robotic-Arm-Capstone\Robotic-Arm\Robotic-Arm\bin\Debug\Robotic-Arm.exe
+C:\Users\SkinJacket\Robotic-Arm-Capstone\Robotic-Arm\Robotic-Arm\bin\Debug\Robotic-Arm.pdb
+C:\Users\SkinJacket\Robotic-Arm-Capstone\Robotic-Arm\Robotic-Arm\obj\Debug\Robotic-Arm.csprojAssemblyReference.cache
+C:\Users\SkinJacket\Robotic-Arm-Capstone\Robotic-Arm\Robotic-Arm\obj\Debug\Robotic_Arm.Form1.resources
+C:\Users\SkinJacket\Robotic-Arm-Capstone\Robotic-Arm\Robotic-Arm\obj\Debug\Robotic_Arm.Properties.Resources.resources
+C:\Users\SkinJacket\Robotic-Arm-Capstone\Robotic-Arm\Robotic-Arm\obj\Debug\Robotic-Arm.csproj.GenerateResource.cache
+C:\Users\SkinJacket\Robotic-Arm-Capstone\Robotic-Arm\Robotic-Arm\obj\Debug\Robotic-Arm.exe
+C:\Users\SkinJacket\Robotic-Arm-Capstone\Robotic-Arm\Robotic-Arm\obj\Debug\Robotic-Arm.pdb

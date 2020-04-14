@@ -41,6 +41,7 @@ function showData(str)
     //check if connection happend
     xmlhttp.onreadystatechange = function()
     {
+		
       if((this.status >= 200 && this.status <= 400))
       {
         var obj = JSON.parse(xmlhttp.responseText);
@@ -48,7 +49,7 @@ function showData(str)
         console.log("received data: Test:" + obj['testNo']);
         console.log("received data: CycleNo:" + obj['cycleNo']);
         console.log("received data: Time:" + obj['time']);
-
+		
         timeData[0] = obj['testNo'].toString();
         timeData[1] = obj['cycleNo'].toString();
         timeData[2] = obj['time'].toString();
@@ -56,8 +57,15 @@ function showData(str)
         var timeData1 = timeData[1].split(",");
         var timeData2 = timeData[2].split(",");
         timeData = timeData0.concat(timeData1, timeData2);
+		//removes any empty elements when grabbing selective data
+		timeData = timeData.filter(function(obj) {return obj});
+		
         console.log(timeData);
+
       }
+	  else{
+		  console.log("Not connected!!")
+	  }
       
     }
 
@@ -66,34 +74,54 @@ function showData(str)
     //add code here to show data on chart
 
     return timeData;
+    
+
+
+    return timeData;
+
   }
   
 }
 
 // Area Chart Example
 var ctx = document.getElementById("myAreaChart");
-var lineData = showData("2");
+
+console.log(showData("0"));
+var lineData = showData("3");
 console.log(lineData);
+
+//determining number of lines to draw by dividing the time data by 6 - or by the number of cycles per test
+
+var numLines = lineData.length / 6;
+lineChartData = {};
+lineChartData.labels = ["Cycle 1", "Cycle 2", "Cycle 3", "Cycle 4", "Cycle 5", "Cycle 6"];
+lineChartData.datasets = [];
+lineChartData.datasets.label = "Times"
+
+for (i = 0; i < numLines; i++){
+	
+	y = [];
+	lineChartData.datasets.push({});
+	dataset = lineChartData.datasets[i];
+	dataset.fillColor = "rgba(0, 0, 0, 0)";
+	dataset.strokeColor = "rgba(102, 92, 35, 1)";
+	dataset.data = lineData.slice(0 + (6 * i), 5 + (6 * i));
+	
+	for (j = 0; j < 6; j++){
+		y.push(dataset.data[j]);
+		
+		
+	}
+	
+	lineChartData.datasets[i].data = y;
+}
+
+
+
 var myLineChart = new Chart(ctx, {
   type: 'line',
-  data: {
-    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-    datasets: [{
-      label: "Earnings",
-      lineTension: 0.3,
-      backgroundColor: "rgba(78, 115, 223, 0.05)",
-      borderColor: "rgba(78, 115, 223, 1)",
-      pointRadius: 3,
-      pointBackgroundColor: "rgba(78, 115, 223, 1)",
-      pointBorderColor: "rgba(78, 115, 223, 1)",
-      pointHoverRadius: 3,
-      pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
-      pointHoverBorderColor: "rgba(78, 115, 223, 1)",
-      pointHitRadius: 10,
-      pointBorderWidth: 2,
-      data: lineData,
-    }],
-  },
+  data:lineChartData,
+  
   options: {
     maintainAspectRatio: false,
     layout: {
@@ -107,23 +135,23 @@ var myLineChart = new Chart(ctx, {
     scales: {
       xAxes: [{
         time: {
-          unit: 'date'
+          unit: 'Seconds'
         },
         gridLines: {
           display: false,
           drawBorder: false
         },
         ticks: {
-          maxTicksLimit: 7
+          maxTicksLimit: 10
         }
       }],
       yAxes: [{
         ticks: {
-          maxTicksLimit: 5,
+		  beginAtZero: true,
+          maxTicksLimit: 10,
           padding: 10,
-          // Include a dollar sign in the ticks
           callback: function(value, index, values) {
-            return '$' + number_format(value);
+            return number_format(value);
           }
         },
         gridLines: {
@@ -155,7 +183,7 @@ var myLineChart = new Chart(ctx, {
       callbacks: {
         label: function(tooltipItem, chart) {
           var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-          return datasetLabel + ': $' + number_format(tooltipItem.yLabel);
+          return datasetLabel + number_format(tooltipItem.yLabel);
         }
       }
     }
